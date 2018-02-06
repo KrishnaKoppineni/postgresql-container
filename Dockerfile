@@ -47,7 +47,7 @@ RUN yum install -y centos-release-scl-rh && \
     yum clean all && \
     localedef -f UTF-8 -i en_US en_US.UTF-8 && \
     test "$(id postgres)" = "uid=26(postgres) gid=26(postgres) groups=26(postgres)" && \
-    mkdir -p /var/lib/pgsql/data && \
+    mkdir -p /var/lib/pgsql-persist/data && \
     /usr/libexec/fix-permissions /var/lib/pgsql-persist && \
     /usr/libexec/fix-permissions /var/run/postgresql
 
@@ -65,7 +65,7 @@ ENV BASH_ENV=${CONTAINER_SCRIPTS_PATH}/scl_enable \
     ENV=${CONTAINER_SCRIPTS_PATH}/scl_enable \
     PROMPT_COMMAND=". ${CONTAINER_SCRIPTS_PATH}/scl_enable"
 
-VOLUME ["/var/lib/pgsql/data"]
+VOLUME ["/var/lib/pgsql-persist/data"]
 
 # {APP_DATA} needs to be accessed by postgres user while s2i assembling
 # postgres user changes permissions of files in APP_DATA during assembling
