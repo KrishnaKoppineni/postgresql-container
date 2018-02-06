@@ -12,8 +12,8 @@ FROM centos/s2i-core-centos7
 
 ENV POSTGRESQL_VERSION=9.5 \
     POSTGRESQL_PREV_VERSION=9.4 \
-    HOME=/var/lib/pgsql \
-    PGUSER=postgres \
+    HOME=/var/lib/pgsql-persist \
+    PGUSER=postgres-persist \
     APP_DATA=/opt/app-root
 
 ENV SUMMARY="PostgreSQL is an advanced Object-Relational database management system" \
@@ -48,11 +48,11 @@ RUN yum install -y centos-release-scl-rh && \
     localedef -f UTF-8 -i en_US en_US.UTF-8 && \
     test "$(id postgres)" = "uid=26(postgres) gid=26(postgres) groups=26(postgres)" && \
     mkdir -p /var/lib/pgsql/data && \
-    /usr/libexec/fix-permissions /var/lib/pgsql && \
-    /usr/libexec/fix-permissions /var/run/postgresql
+    /usr/libexec/fix-permissions /var/lib/pgsql-persist && \
+    /usr/libexec/fix-permissions /var/run/postgresql-persist
 
 # Get prefix path and path to scripts rather than hard-code them in scripts
-ENV CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/postgresql \
+ENV CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/postgresql-persist \
     ENABLED_COLLECTIONS=rh-postgresql95
 
 COPY root /
